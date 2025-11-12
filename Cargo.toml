@@ -1,0 +1,22 @@
+[package]
+name = "stridespot_email_system"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ntex = { version = "2.0", features = ["tokio"] }
+tokio =  { version = "1", features = ["full"] }
+
+
+#Email 
+lettre = {version = "0.11", features = ["tokio1-native-tls","builder"] }
+
+
+# Enviroment
+once_cell = "1.21.3"
+dotenv-flow = "0.16.2"
+env_logger= "0.8"
+log = "0.4"
+rand = "0.8"
+num_cpus = "1.17.0"
+derive_more = { version = "2.0", features = ["full"] }
