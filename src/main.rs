@@ -2,7 +2,7 @@ mod auth_credentials;
 mod services;
 
 use services::{
-    delivery::delivery::confirmed_delivery,
+    delivery::delivery::{confirmed_delivery, Delivery},
     login::login::login as other_login,
     marketing::marketing::marketing_updates,
     otp::otp::otp_code,
@@ -18,13 +18,15 @@ use ntex::web;
 use std::env;
 use num_cpus;
 use std::error::Error;
+use ntex::web::types::Json;
+use serde::Deserialize;
 
 
 // delivery endpoint
 #[web::post("/delivery")]
-async fn delivery(req_body: String) -> impl web::Responder {
-    confirmed_delivery(req_body.name,req_body.email,req_body.delivery_id).await.ok();
-    web::HttpResponse::Ok().body(req_body)
+async fn delivery(req_body:Json<Delivery>) -> impl web::Responder {
+    confirmed_delivery(&req_body.name,&req_body.email,&req_body.delivery_id).await.ok();
+    web::HttpResponse::Ok()
      
 }
 
