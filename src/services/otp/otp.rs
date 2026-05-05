@@ -4,6 +4,19 @@ use lettre::message::{
 };
 use lettre::AsyncTransport;
 use rand::Rng;
+use serde::{Serialize, Deserialize};
+
+
+
+// Request body Struct
+
+#[derive(Debug,Serialize,Deserialize)]
+pub struct Otp{
+
+    pub name: String,
+    pub email: String,
+
+}
 
 
 

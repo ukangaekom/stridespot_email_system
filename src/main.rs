@@ -3,13 +3,13 @@ mod services;
 
 use services::{
     delivery::delivery::{confirmed_delivery, Delivery},
-    login::login::login as other_login,
-    marketing::marketing::marketing_updates,
-    otp::otp::otp_code,
-    payment::payment::payment_deposited,
-    registration::registration::registration as other_registration,
-    resetpassword::resetpassword::resetpassword as other_resetpassword,
-    updates::update::feature_updates
+    login::login::{login as other_login, Login},
+    marketing::marketing::{marketing_updates, Marketing},
+    otp::otp::{otp_code, Otp},
+    payment::payment::{payment_deposited, PaymentDeposited},
+    registration::registration::{registration as other_registration, Registration},
+    resetpassword::resetpassword::{resetpassword as other_resetpassword, ResetPassword},
+    updates::update::{feature_updates, FeatureUpdate}
 
 };
 use derive_more::{Display, Error};
@@ -19,7 +19,6 @@ use std::env;
 use num_cpus;
 use std::error::Error;
 use ntex::web::types::Json;
-use serde::Deserialize;
 
 
 // delivery endpoint
@@ -32,23 +31,23 @@ async fn delivery(req_body:Json<Delivery>) -> impl web::Responder {
 
 // login endpoint
 #[web::post("/login")]
-async fn login(req_body: String) -> impl web::Responder {
-    other_login("Ekomabasi","ekomabasiuk@gmail.com","Android","Uyo","12:00 UTC").await.ok();
-    web::HttpResponse::Ok().body(req_body)
+async fn login(req_body: Json<Login>) -> impl web::Responder {
+    other_login(&req_body.name, &req_body.email, &req_body.device, &req_body.location, &req_body.time).await.ok();
+    web::HttpResponse::Ok()
 }
 
 // marketingendpoint 
 #[web::post("/marketing")]
-async fn marketing(req_body: String) -> impl web::Responder {
-    marketing_updates("Ekomabasi","ekomabasiuk@gmail.com","Bonanza","We Updated the APP-> Body",).await.ok();
-    web::HttpResponse::Ok().body(req_body)
+async fn marketing(req_body: Json<Marketing>) -> impl web::Responder {
+    marketing_updates(&req_body.name, &req_body.email, &req_body.topic, &req_body.body).await.ok();
+    web::HttpResponse::Ok()
 }
 
 // otp endpoint
 #[web::post("/otp")]
-async fn otp(req_body: String) -> impl web::Responder {
+async fn otp(req_body: Json<Otp>) -> impl web::Responder {
     
-    let otp_request = otp_code("Ekomabasi","ekomabasiuk@gmail.com").await.ok();
+    let otp_request = otp_code(&req_body.name, &req_body.email).await.ok();
 
     let req_response = format!("{{\"OTP\":\"{}\"}}",otp_request.unwrap());
     
@@ -60,32 +59,32 @@ async fn otp(req_body: String) -> impl web::Responder {
 
 // payment endpoint
 #[web::post("/payment")]
-async fn payment(req_body: String) -> impl web::Responder {
-    payment_deposited("Ekomabasi","ekomabasiuk@gmail.com","sender_name","121333","#DL829230").await.ok();
-    web::HttpResponse::Ok().body(req_body)
+async fn payment(req_body: Json<PaymentDeposited>) -> impl web::Responder {
+    payment_deposited(&req_body.name, &req_body.email, &req_body.sender_name, &req_body.amount, &req_body.order_id).await.ok();
+    web::HttpResponse::Ok()
 }
 
 // registration endpoint
 #[web::post("/registration")]
-async fn registration(req_body: String) -> impl web::Responder {
-    other_registration("Ekomabasi","ekomabasiuk@gmail.com").await.ok();
-    web::HttpResponse::Ok().body(req_body)
+async fn registration(req_body: Json<Registration>) -> impl web::Responder {
+    other_registration(&req_body.name, &req_body.email).await.ok();
+    web::HttpResponse::Ok()
 }
 
 
 // resetpassword endpoint
 #[web::post("/resetpassword")]
-async fn resetpassword(req_body: String) -> impl web::Responder {
-    let resetpassword = other_resetpassword("Ekomabasi","ekomabasiuk@gmail.com",).await.ok();
+async fn resetpassword(req_body: Json<ResetPassword>) -> impl web::Responder {
+    let resetpassword = other_resetpassword(&req_body.name, &req_body.email).await.ok();
     let req_response = format!("{{\"tempoary_password\":\"{}\"}}",resetpassword.unwrap());
     web::HttpResponse::Ok().body(req_response)
 }
 
 // project updates endpoint
 #[web::post("/updates")]
-async fn updates(req_body: String) -> impl web::Responder {
-    feature_updates("Ekomabasi","ekomabasiuk@gmail.com","Update Topic", "Update Message","https://github.com/ukangaekom").await.ok();
-    web::HttpResponse::Ok().body(req_body)
+async fn updates(req_body: Json<FeatureUpdate>) -> impl web::Responder {
+    feature_updates(&req_body.name, &req_body.email, &req_body.feature_topic, &req_body.body, &req_body.site_link).await.ok();
+    web::HttpResponse::Ok()
 }
 
 

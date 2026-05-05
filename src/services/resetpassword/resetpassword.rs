@@ -4,9 +4,26 @@ use lettre::message::{
 };
 use lettre::AsyncTransport;
 use rand::{distributions::Alphanumeric, Rng};
+use serde::{Serialize, Deserialize};
 
 
 // const CHARSET64: &[u8, 64] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ\ abcdefghijklmnopqrstuvwxyz\ 01234567890-_!@#$%^&*()+";
+
+
+
+
+
+
+// Request body Struct
+
+#[derive(Debug,Serialize,Deserialize)]
+pub struct ResetPassword{
+
+    pub name: String,
+    pub email: String,
+
+}
+
 
 pub async fn resetpassword(name:&str,email:&str) -> Result<String,Box<dyn std::error::Error>>{
 

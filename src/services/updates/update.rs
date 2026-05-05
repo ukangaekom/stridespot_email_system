@@ -4,6 +4,22 @@ use lettre::message::{
 };
 use lettre::AsyncTransport;
 
+
+
+use serde::{Serialize, Deserialize};
+#[derive(Debug,Serialize,Deserialize)]
+pub struct FeatureUpdate{
+
+    pub name: String,
+    pub email: String,
+    pub feature_topic:String,
+    pub body: String,
+    pub site_link: String
+
+}
+
+
+
 // let body:&str = "<ul style=\"text-align:left;color:#555;\">
 //           <li>🚀 Faster delivery tracking</li>
 //           <li>🔒 Enhanced security</li>

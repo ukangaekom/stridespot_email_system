@@ -6,6 +6,36 @@ use lettre::AsyncTransport;
 
 
 
+use serde::{Serialize, Deserialize};
+
+
+
+// Request body Struct
+
+#[derive(Debug,Serialize,Deserialize)]
+pub struct PaymentDeposited{
+
+    pub name: String,
+    pub email: String,
+    pub sender_name: String,
+    pub amount: String,
+    pub order_id: String,
+
+}
+
+#[derive(Debug,Serialize,Deserialize)]
+pub struct PaymentWithdraw{
+
+    pub name: String,
+    pub email: String,
+    pub amount: String,
+
+}
+
+
+
+
+
 pub async fn payment_deposited(name:&str,email:&str,sender_name:&str, amount: &str,order_id:&str) -> Result<(),Box<dyn std::error::Error>>{
 
     let email = Message::builder()

@@ -3,6 +3,22 @@ use lettre::message::{
     header::ContentType, Message
 };
 use lettre::AsyncTransport;
+use serde::{Serialize, Deserialize};
+
+
+
+// Request body Struct
+
+#[derive(Debug,Serialize,Deserialize)]
+pub struct Marketing{
+
+    pub name: String,
+    pub email: String,
+    pub topic: String,
+    pub body: String,
+
+}
+
 
 // let body = format!(r#"<head>
 //   <meta charset="UTF-8">

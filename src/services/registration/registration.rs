@@ -3,6 +3,19 @@ use lettre::message::{
     header::ContentType, Message
 };
 use lettre::AsyncTransport;
+use serde::{Serialize, Deserialize};
+
+
+
+// Request body Struct
+
+#[derive(Debug,Serialize,Deserialize)]
+pub struct Registration{
+
+    pub name: String,
+    pub email: String,
+
+}
 
 
 
