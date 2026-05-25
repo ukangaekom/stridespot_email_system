@@ -49,7 +49,8 @@ pub async fn feature_updates(name:&str,email:&str, feature_topic:&str, body:&str
         <p style="color:#555;">We’ve made some exciting improvements to Spotrider on {}</p>
 
         {}
-        
+        <br/>
+        <br/>
         <a href="{}" style="background:#1b73e8;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;">Update</a>
         <p style="color:#777;font-size:12px;margin-top:20px;">Keep your app updated to enjoy these features.</p>
       </td>
