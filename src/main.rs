@@ -39,7 +39,7 @@ async fn login(req_body: Json<Login>) -> impl web::Responder {
 // marketingendpoint 
 #[web::post("/marketing")]
 async fn marketing(req_body: Json<Marketing>) -> impl web::Responder {
-    marketing_updates(&req_body.name, &req_body.email, &req_body.topic, &req_body.body).await.ok();
+    marketing_updates(&req_body.name, &req_body.email, &req_body.topic, &req_body.body, &req_body.link).await.ok();
     web::HttpResponse::Ok()
 }
 
