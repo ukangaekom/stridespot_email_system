@@ -26,8 +26,28 @@ pub async fn confirmed_delivery(name:&str,email:&str,delivery_id:&str) -> Result
         .to(email.parse().unwrap())
         .subject("Delivery Confirmed")
         .header(ContentType::TEXT_HTML)
-        .body(String::from(format!(r#"<html> <br>Dear Ekom,<br/>
-        !</html>"#)))
+        .body(format!(r#"
+        <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Delivery Confirmed</title>
+</head>
+<body style="font-family:Arial,sans-serif;background:#f9f9f9;">
+  <table align="center" width="100%" style="max-width:600px;background:#fff;border-radius:10px;padding:20px;">
+    <tr>
+      <td align="center">
+        <h2 style="color:#1b73e8;">Delivery Confirmed</h2>
+        <p style="color:#555;">Hi {},</p>
+        <p style="color:#555;">Your delivery has been confirmed and is on its way.</p>
+        <p style="color:#555;">Delivery ID: <strong>{}</strong></p>
+        <p style="color:#777;font-size:14px;">Thank you for choosing Stridespot.</p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+        "#, name, delivery_id))
         .unwrap();
 
 
